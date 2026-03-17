@@ -1,6 +1,7 @@
 from tokenize import String
 import chess
 import chess.engine
+from comms import ESP32Comms
 from motion_mapper import map_coordinates
 
 # Create board
@@ -31,6 +32,8 @@ while not board.is_game_over():
             print(board)
             #print(result.move.uci())
             mapped_coordinates = map_coordinates(result.move.uci())
+            comms = ESP32Comms(port="/dev/ttyUSB0")  # adjust if needed
+            comms.send_move(mapped_coordinates)
             #print(mapped_coordinates)
         else:
             print("Illegal move!")

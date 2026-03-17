@@ -1,5 +1,7 @@
+from tokenize import String
 import chess
 import chess.engine
+from motion_mapper import map_coordinates
 
 # Create board
 board = chess.Board()
@@ -24,10 +26,12 @@ while not board.is_game_over():
             # Engine move
             result = engine.play(board, chess.engine.Limit(time=0.5))
             board.push(result.move)
-
+            
             print("\nStockfish played:", result.move)
             print(board)
-
+            #print(result.move.uci())
+            mapped_coordinates = map_coordinates(result.move.uci())
+            #print(mapped_coordinates)
         else:
             print("Illegal move!")
 
